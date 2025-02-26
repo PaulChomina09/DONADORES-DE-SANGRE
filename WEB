@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Donación de Sangre - Salvando Vidas!</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #00bcd4, #009688);
+            color: white;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        h1 {
+            font-size: 4rem;
+            margin-top: 20px;
+            color: #fff;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.5);
+        }
+        h2 {
+            font-size: 2.5rem;
+            margin-top: 30px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        .container {
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            margin-top: 20px;
+        }
+        input, select, button {
+            padding: 12px;
+            width: 70%;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            margin: 10px 0;
+            background-color: #009688;
+            color: white;
+            transition: 0.3s;
+        }
+        input:focus, select:focus, button:hover {
+            background-color: #00796b;
+            outline: none;
+            transform: scale(1.05);
+        }
+        .donor-list, .request-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 20px;
+        }
+        .donor, .request {
+            font-size: 1.2rem;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.2);
+            margin: 8px 0;
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .donor:hover, .request:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.3);
+        }
+        .donor {
+            background: #00bcd4;
+        }
+        .request {
+            background: #80deea;
+        }
+        .donor-list li, .request-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            margin-bottom: 12px;
+            background-color: #00bcd4;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .request-list li {
+            background-color: #4caf50;
+        }
+        .donor-list li .details, .request-list li .details {
+            font-size: 0.9rem;
+            color: #333;
+        }
+        .details span {
+            font-weight: bold;
+            color: #00796b;
+        }
+        .container input, .container select, .container button {
+            font-size: 1.1rem;
+            padding: 14px;
+        }
+        .button {
+            background: #00bcd4;
+            color: white;
+            font-size: 1.5rem;
+            padding: 15px 30px;
+            margin: 20px 0;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background: #00796b;
+        }
+        .header {
+            background: #009688;
+            padding: 30px;
+            border-radius: 0 0 20px 20px;
+        }
+        .header h1, .header p {
+            margin: 0;
+        }
+        .header p {
+            font-size: 1.2rem;
+            color: white;
+        }
+        footer {
+            font-size: 0.8rem;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #00796b;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🩸 ¡Donación de Sangre - Salva Vidas! 🩸</h1>
+        <p>Haz una diferencia en la vida de alguien. ¡Dona sangre y ayúdanos a salvar vidas!</p>
+    </div>
+    <div class="container">
+        <h2>🔎 Busca Donantes de Sangre</h2>
+        <input type="text" id="searchDonors" placeholder="Busca por tipo de sangre o edad..." onkeyup="filterDonors()">
+        <ul class="donor-list" id="donorList"></ul>
+
+        <h2>👥 Regístrate como Donante</h2>
+        <div>
+            <input type="text" id="name" placeholder="Nombre Completo">
+            <input type="number" id="age" placeholder="Edad (18-50)" min="18" max="50">
+            <select id="bloodType">
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
+            </select>
+            <input type="text" id="phone" placeholder="Número de Teléfono">
+            <select id="location">
+                <option>Hermosillo</option>
+                <option>Ures</option>
+                <option>Caborca</option>
+                <option>Nogales</option>
+                <option>Puerto Peñasco</option>
+                <option>Guaymas</option>
+                <option>Navojoa</option>
+            </select>
+            <input type="email" id="email" placeholder="Correo Electrónico">
+            <select id="reward">
+                <option value="250">250</option>
+                <option value="350">350</option>
+                <option value="200">200</option>
+                <option value="300">300</option>
+                <option value="400">400</option>
+                <option value="450">450</option>
+            </select>
+            <button onclick="addDonor()" class="button">¡Añadir Donante!</button>
+        </div>
+
+        <h2>💉 Solicita Donante</h2>
+        <div>
+            <input type="text" id="patientName" placeholder="Nombre del Paciente">
+            <input type="text" id="hospital" placeholder="Hospital">
+            <select id="requestReward">
+                <option value="250">250</option>
+                <option value="350">350</option>
+                <option value="200">200</option>
+                <option value="300">300</option>
+                <option value="400">400</option>
+                <option value="450">450</option>
+            </select>
+            <button onclick="requestDonor()" class="button">¡Solicitar Donante!</button>
+        </div>
+
+        <h2>📋 Solicitudes de Sangre</h2>
+        <input type="text" id="searchRequests" placeholder="Busca por tipo de sangre o hospital..." onkeyup="filterRequests()">
+        <ul class="request-list" id="requestList"></ul>
+    </div>
+
+    <footer>
+        <p>Esta página fue creada sin fines de lucro. Su único objetivo es ayudar a salvar vidas. Agradecemos a todos los donantes por su generosidad.</p>
+    </footer>
+
+    <script>
+        let donors = [
+            { name: "Juan Pérez", age: 25, blood: "O+", phone: "+52 662 1234567", location: "Hermosillo", email: "juan.perez@gmail.com", reward: 350 },
+            { name: "María González", age: 30, blood: "A-", phone: "+52 662 7654321", location: "Ures", email: "maria.gonzalez@gmail.com", reward: 250 },
+            { name: "Carlos Ramírez", age: 40, blood: "B+", phone: "+52 662 2345678", location: "Caborca", email: "carlos.ramirez@gmail.com", reward: 400 },
+            { name: "Ana López", age: 22, blood: "O-", phone: "+52 662 8765432", location: "Nogales", email: "ana.lopez@gmail.com", reward: 300 },
+            { name: "Pedro Méndez", age: 35, blood: "AB+", phone: "+52 662 3456789", location: "Puerto Peñasco", email: "pedro.mendez@gmail.com", reward: 450 },
+            { name: "Laura Martínez", age: 28, blood: "O+", phone: "+52 662 9876543", location: "Guaymas", email: "laura.martinez@gmail.com", reward: 350 },
+            { name: "José Rodríguez", age: 45, blood: "A+", phone: "+52 662 5678901", location: "Navojoa", email: "jose.rodriguez@gmail.com", reward: 250 },
+            { name: "Isabel Sánchez", age: 38, blood: "B-", phone: "+52 662 6543210", location: "Hermosillo", email: "isabel.sanchez@gmail.com", reward: 300 },
+            { name: "Luis Hernández", age: 50, blood: "AB-", phone: "+52 662 4321098", location: "Ures", email: "luis.hernandez@gmail.com", reward: 400 },
+            { name: "Roberto Fernández", age: 29, blood: "O+", phone: "+52 662 5678123", location: "Caborca", email: "roberto.fernandez@gmail.com", reward: 400 },
+            // Agregar más personas aquí hasta completar la lista de 50
+        ];
+
+        let requests = [
+            { patientName: "Luis Torres", blood: "O+", hospital: "Hospital General de Hermosillo", phone: "+52 662 1234567", reward: 350 },
+            { patientName: "Susana Méndez", blood: "A-", hospital: "Hospital del Estado de Sonora", phone: "+52 662 7654321", reward: 250 },
+            { patientName: "Antonio García", blood: "B+", hospital: "Hospital General de Nogales", phone: "+52 662 2345678", reward: 400 },
+            { patientName: "Paula Jiménez", blood: "O-", hospital: "IMSS Guaymas", phone: "+52 662 8765432", reward: 300 },
+            { patientName: "Oscar Rivera", blood: "AB+", hospital: "Hospital de Puerto Peñasco", phone: "+52 662 3456789", reward: 450 },
+            { patientName: "Mariana Castro", blood: "O+", hospital: "Hospital General de Navojoa", phone: "+52 662 9876543", reward: 350 },
+            { patientName: "Héctor Martínez", blood: "A+", hospital: "Hospital General de Hermosillo", phone: "+52 662 5678901", reward: 250 },
+            { patientName: "Sandra López", blood: "B-", hospital: "Hospital IMSS de Caborca", phone: "+52 662 6543210", reward: 300 },
+            { patientName: "Víctor Ramos", blood: "AB-", hospital: "Hospital de Guaymas", phone: "+52 662 4321098", reward: 400 },
+            { patientName: "Elena Pérez", blood: "O+", hospital: "Hospital General de Sonora", phone: "+52 662 5678123", reward: 250 },
+            // Agregar más solicitudes hasta completar la lista de 50
+        ];
+
+        function addDonor() {
+            let name = document.getElementById("name").value;
+            let age = document.getElementById("age").value;
+            let blood = document.getElementById("bloodType").value;
+            let phone = document.getElementById("phone").value;
+            let location = document.getElementById("location").value;
+            let email = document.getElementById("email").value;
+            let reward = document.getElementById("reward").value;
+
+            donors.push({ name, age, blood, phone, location, email, reward });
+
+            alert("¡Donante agregado exitosamente!");
+
+            updateDonorList();
+        }
+
+        function requestDonor() {
+            let patientName = document.getElementById("patientName").value;
+            let blood = document.getElementById("bloodType").value;
+            let hospital = document.getElementById("hospital").value;
+            let phone = document.getElementById("phone").value;
+            let reward = document.getElementById("requestReward").value;
+
+            requests.push({ patientName, blood, hospital, phone, reward });
+
+            alert("¡Solicitud de donante realizada!");
+
+            updateRequestList();
+        }
+
+        function filterDonors() {
+            let query = document.getElementById("searchDonors").value.toLowerCase();
+            let filtered = donors.filter(donor => donor.name.toLowerCase().includes(query) || donor.blood.toLowerCase().includes(query) || donor.age.toString().includes(query));
+            displayDonors(filtered);
+        }
+
+        function filterRequests() {
+            let query = document.getElementById("searchRequests").value.toLowerCase();
+            let filtered = requests.filter(request => request.patientName.toLowerCase().includes(query) || request.blood.toLowerCase().includes(query) || request.hospital.toLowerCase().includes(query));
+            displayRequests(filtered);
+        }
+
+        function displayDonors(donorsToDisplay) {
+            let donorList = document.getElementById("donorList");
+            donorList.innerHTML = '';
+            donorsToDisplay.forEach(donor => {
+                let li = document.createElement("li");
+                li.classList.add("donor");
+                li.innerHTML = `
+                    <div>${donor.name}</div>
+                    <div class="details">
+                        <span>Tipo de Sangre:</span> ${donor.blood}<br>
+                        <span>Edad:</span> ${donor.age}<br>
+                        <span>Recompensa:</span> $${donor.reward}<br>
+                        <span>Teléfono:</span> ${donor.phone}
+                    </div>
+                `;
+                donorList.appendChild(li);
+            });
+        }
+
+        function displayRequests(requestsToDisplay) {
+            let requestList = document.getElementById("requestList");
+            requestList.innerHTML = '';
+            requestsToDisplay.forEach(request => {
+                let li = document.createElement("li");
+                li.classList.add("request");
+                li.innerHTML = `
+                    <div>${request.patientName}</div>
+                    <div class="details">
+                        <span>Tipo de Sangre:</span> ${request.blood}<br>
+                        <span>Hospital:</span> ${request.hospital}<br>
+                        <span>Recompensa:</span> $${request.reward}<br>
+                        <span>Teléfono:</span> ${request.phone}
+                    </div>
+                `;
+                requestList.appendChild(li);
+            });
+        }
+
+        function updateDonorList() {
+            displayDonors(donors);
+        }
+
+        function updateRequestList() {
+            displayRequests(requests);
+        }
+
+        window.onload = function() {
+            updateDonorList();
+            updateRequestList();
+        }
+    </script>
+</body>
+</html>
